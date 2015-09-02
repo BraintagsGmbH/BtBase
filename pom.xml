@@ -13,7 +13,7 @@
     <groupId>de.braintags</groupId>
     <!-- The artifactId is the name of this project. It will be used for naming
         the jar too -->
-    <artifactId>btgsPOM</artifactId>
+    <artifactId>btBasePOM</artifactId>
     <!-- Packaging is the type of this project "pom" = This Project is only
         a configuring project with no real jar or else "jar" = This Project will
         be build a jar -->
