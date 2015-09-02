@@ -2,28 +2,315 @@
 <!-- Use this root-element to get auto-tag-completion (if your eclipse has 
 	support for this) -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <!-- The model version of this pom-file. Currently its always 4.0.0 -->
-    <modelVersion>4.0.0</modelVersion>
-    <!-- The groupId defines the group for this project Core-Projects goes to
-        "de.braintags" Features goes to "de.braintags.feature" Applications goes
-        to "de.braintags.apps" -->
-    <groupId>de.braintags</groupId>
-    <!-- The artifactId is the name of this project. It will be used for naming
-        the jar too -->
-    <artifactId>btBasePOM</artifactId>
-    <!-- Packaging is the type of this project "pom" = This Project is only
-        a configuring project with no real jar or else "jar" = This Project will
-        be build a jar -->
-    <packaging>pom</packaging>
+	<!-- The model version of this pom-file. Currently its always 4.0.0 -->
+	<modelVersion>4.0.0</modelVersion>
 
-    <!-- Human readable name of this project -->
-    <name>Braintags Default POM</name>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 
-    <!-- Description of this project -->
-    <description>This POM configures all data which will be used by all
-        underlying POMs.
-    </description>
+
+	<!-- The groupId defines the group for this project Core-Projects goes to 
+		"de.braintags" Features goes to "de.braintags.feature" Applications goes 
+		to "de.braintags.apps" -->
+	<groupId>de.braintags</groupId>
+	<!-- The artifactId is the name of this project. It will be used for naming 
+		the jar too -->
+	<artifactId>btBasePOM</artifactId>
+	<!-- The version of this project Append "-SNAPSHOT" to version make it a 
+		snapshot -->
+	<version>2</version>
+	<!-- Packaging is the type of this project "pom" = This Project is only 
+		a configuring project with no real jar or else "jar" = This Project will 
+		be build a jar -->
+	<packaging>pom</packaging>
+
+	<!-- Human readable name of this project -->
+	<name>Braintags Default POM</name>
+
+	<!-- Short Information about the company -->
+	<organization>
+		<name>Braintags GmbH</name>
+		<url>http://www.braintags.de</url>
+	</organization>
+
+	<licenses>
+		<license>
+			<name>Eclipse Public License - v 1.0</name>
+			<url>http://www.eclipse.org/legal/epl-v10.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<!-- https://github.com/BraintagsGmbH/BtBase.git -->
+	<scm>
+		<connection>scm:git:git@github.com:BraintagsGmbH/BtBase.git</connection>
+		<developerConnection>scm:git:git@github.com:BraintagsGmbH/BtBase.git</developerConnection>
+		<url>git@github.com:BraintagsGmbH/BtBase.git</url>
+	</scm>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- Compiler plugin -->
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+
+		<!-- Plugin versions -->
+
+		<!-- We use 3.1 until this is resolved https://jira.codehaus.org/browse/MCOMPILER-236 -->
+		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
+		<maven.jar.plugin.version>2.5</maven.jar.plugin.version>
+		<maven.source.plugin.version>2.4</maven.source.plugin.version>
+		<maven.resource.plugin.version>2.7</maven.resource.plugin.version>
+		<maven.javadoc.plugin.version>2.10.1</maven.javadoc.plugin.version>
+		<maven.dependency.plugin.version>2.9</maven.dependency.plugin.version>
+		<maven.clean.plugin.version>2.6.1</maven.clean.plugin.version>
+		<maven.deploy.plugin.version>2.8.2</maven.deploy.plugin.version>
+		<maven.install.plugin.version>2.5.2</maven.install.plugin.version>
+		<maven.site.plugin.version>3.4</maven.site.plugin.version>
+		<maven.surefire.plugin.version>2.18</maven.surefire.plugin.version>
+		<maven.surefire.report.plugin.version>2.18</maven.surefire.report.plugin.version>
+		<maven.enforcer.plugin.version>1.3.1</maven.enforcer.plugin.version>
+	</properties>
+
+	<!-- This sections defines where to deploy the artifact -->
+	<distributionManagement>
+		<!-- This repository will only accept releases for deploy -->
+		<repository>
+			<id>nexus-deploy</id>
+			<name>Braintags Release Repository</name>
+			<!-- <url>file:///opt/data/repository/releases</url> -->
+			<url>http://maven.bt-wl.net:8081/nexus/content/repositories/releases</url>
+		</repository>
+
+		<!-- This repository will only accept snapshots for deploy -->
+		<snapshotRepository>
+			<id>nexus-snapshots-deploy</id>
+			<name>Braintags Snapshot Repository</name>
+			<!-- <url>file:///opt/data/repository/snapshots</url> -->
+			<url>http://maven.bt-wl.net:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+
+		<!-- This location will be used to store the reports into -->
+		<site>
+			<id>maven-site</id>
+			<name>Project Documentation Site</name>
+			<url>file:///opt/data/sites/</url>
+		</site>
+	</distributionManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven.compiler.plugin.version}</version>
+          <configuration>
+            <optimize>true</optimize>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${maven.source.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${maven.jar.plugin.version}</version>
+          <executions>
+            <execution>
+              <id>default-jar</id>
+              <configuration>
+                <archive>
+                  <!-- Generate a jar INDEX.LIST -->
+                  <index>true</index>
+                  <!-- Add the Maven coordinates in the manifest -->
+                  <manifestEntries>
+                    <Maven-Group-Id>${project.groupId}</Maven-Group-Id>
+                    <Maven-Artifact-Id>${project.artifactId}</Maven-Artifact-Id>
+                    <Maven-Version>${project.version}</Maven-Version>
+                  </manifestEntries>
+                </archive>
+                <!-- Remove examples and docoverride -->
+                <excludes>
+                  <exclude>/docoverride/**</exclude>
+                  <exclude>/examples/**</exclude>
+                </excludes>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven.surefire.plugin.version}</version>
+          <configuration>
+            <failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
+            <systemPropertyVariables>
+              <io.netty.leakDetectionLevel>PARANOID</io.netty.leakDetectionLevel>
+            </systemPropertyVariables>
+            <!-- Needs to be small enough to run in a EC2 1.7GB small instance -->
+            <argLine>-server -Xmx1200M</argLine>
+            <forkCount>1</forkCount>
+            <reuseForks>true</reuseForks>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-report-plugin</artifactId>
+          <version>${maven.surefire.report.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>${maven.site.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${maven.javadoc.plugin.version}</version>
+          <!-- Remove impl and keep only io/vertx files (no examples or docoverride) -->
+          <configuration>
+            <additionalparam>-Xdoclint:none</additionalparam>
+            <sourceFileExcludes>
+              <sourceFileExclude>**/package-info.java</sourceFileExclude>
+              <sourceFileExclude>**/impl/**</sourceFileExclude>
+            </sourceFileExcludes>
+            <sourceFileIncludes>
+              <sourceFileInclude>de/braintags/io/vertx/**/*.java</sourceFileInclude>
+            </sourceFileIncludes>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${maven.resource.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>${maven.dependency.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>${maven.install.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>${maven.deploy.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>${maven.clean.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>${maven.enforcer.plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-test-jar</id>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>sonatype-oss-release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>enforce-no-vertx-snapshots</id>
+                <goals>
+                  <goal>enforce</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <requireReleaseDeps>
+                      <message>No Vert.x Snapshots Allowed during a release!</message>
+                      <includes>
+                        <include>de.braintags.io.vertx:*</include>
+                      </includes>
+                    </requireReleaseDeps>
+                  </rules>
+                  <fail>true</fail>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+
+	<!-- This section allows to define WHO are the developers behind these projects -->
+	<developers>
+		<developer>
+			<id>mremme</id>
+			<name>Michael Remme</name>
+			<email>mremme@braintags.de</email>
+			<organization>Braintags GmbH</organization>
+			<organizationUrl>http://www.braintags.de</organizationUrl>
+			<roles>
+				<role>Master Java Developer</role>
+				<role>Owner</role>
+				<role>Founder</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>mrau</id>
+			<name>Martin Rau</name>
+			<email>martin.rau@braintags.de</email>
+			<organization>Braintags GmbH</organization>
+			<organizationUrl>http://www.braintags.de</organizationUrl>
+			<roles>
+				<role>Java Developer</role>
+				<role>Master of Desaster</role>
+				<role>Cookie Master</role>
+			</roles>
+		</developer>
+	</developers>
+
 </project>
