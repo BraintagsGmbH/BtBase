@@ -24,7 +24,7 @@
 	<artifactId>btBasePOM</artifactId>
 	<!-- The version of this project Append "-SNAPSHOT" to version make it a 
 		snapshot -->
-	<version>4</version>
+	<version>5</version>
 	<!-- Packaging is the type of this project "pom" = This Project is only 
 		a configuring project with no real jar or else "jar" = This Project will 
 		be build a jar -->
