@@ -7,7 +7,7 @@
 
 	<!-- The model version of this pom-file. Currently its always 4.0.0 -->
 	<modelVersion>4.0.0</modelVersion>
-	<version>8-SNAPSHOT</version>
+	<version>9-SNAPSHOT</version>
 
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
@@ -54,6 +54,14 @@
 		<url>git@github.com:BraintagsGmbH/BtBase.git</url>
 	</scm>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>${jacoco.version}</version>
+		</dependency>
+	</dependencies>
+
 	<properties>
 		<testjar.skip>true</testjar.skip>
 		<doc.skip>true</doc.skip>
@@ -61,20 +69,21 @@
 		<!-- We skip sources jar generation as we do it with the assembly plugin 
 			to have greater control over the content -->
 		<source.skip>true</source.skip>
-		
-		
+
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- Compiler plugin -->
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		
-        <javadocSourceFileInclude>de/braintags/**/*.java</javadocSourceFileInclude>
+
+		<javadocSourceFileInclude>de/braintags/**/*.java</javadocSourceFileInclude>
 
 		<!-- Plugin versions -->
 
 		<!-- We use 3.1 until this is resolved https://jira.codehaus.org/browse/MCOMPILER-236 -->
+		<jacoco.version>0.7.5.201505241946</jacoco.version>
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
 		<maven.jar.plugin.version>2.5</maven.jar.plugin.version>
 		<maven.source.plugin.version>2.4</maven.source.plugin.version>
@@ -91,194 +100,237 @@
 	</properties>
 
 
-  <build>
-    <pluginManagement>
-      <plugins>      
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>${maven.compiler.plugin.version}</version>
-          <configuration>
-            <optimize>true</optimize>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-source-plugin</artifactId>
-          <version>${maven.source.plugin.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>${maven.jar.plugin.version}</version>
-          <executions>
-            <execution>
-              <id>default-jar</id>
-              <configuration>
-                <archive>
-                  <!-- Generate a jar INDEX.LIST -->
-                  <index>true</index>
-                  <!-- Add the Maven coordinates in the manifest -->
-                  <manifestEntries>
-                    <Maven-Group-Id>${project.groupId}</Maven-Group-Id>
-                    <Maven-Artifact-Id>${project.artifactId}</Maven-Artifact-Id>
-                    <Maven-Version>${project.version}</Maven-Version>
-                  </manifestEntries>
-                </archive>
-                <!-- Remove examples and docoverride -->
-                <excludes>
-                  <exclude>/docoverride/**</exclude>
-                  <exclude>/examples/**</exclude>
-                </excludes>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${maven.surefire.plugin.version}</version>
-          <configuration>
-            <failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
-            <systemPropertyVariables>
-              <io.netty.leakDetectionLevel>PARANOID</io.netty.leakDetectionLevel>
-            </systemPropertyVariables>
-            <!-- Needs to be small enough to run in a EC2 1.7GB small instance -->
-            <argLine>-server -Xmx1200M</argLine>
-            <forkCount>1</forkCount>
-            <reuseForks>true</reuseForks>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-report-plugin</artifactId>
-          <version>${maven.surefire.report.plugin.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>${maven.site.plugin.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>${maven.javadoc.plugin.version}</version>
-          <!-- Remove impl and keep only io/vertx files (no examples or docoverride) -->
-          <configuration>
-            <additionalparam>-Xdoclint:none</additionalparam>
-            <sourceFileExcludes>
-              <sourceFileExclude>**/package-info.java</sourceFileExclude>
-              <sourceFileExclude>**/impl/**</sourceFileExclude>
-            </sourceFileExcludes>
-            <sourceFileIncludes>
-              <sourceFileInclude>${javadocSourceFileInclude}</sourceFileInclude>
-            </sourceFileIncludes>
-          </configuration>
-        </plugin>
-        
-        
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>${maven.resource.plugin.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <version>${maven.dependency.plugin.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>${maven.install.plugin.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>${maven.deploy.plugin.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>${maven.clean.plugin.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-enforcer-plugin</artifactId>
-          <version>${maven.enforcer.plugin.version}</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar</goal>
-              <goal>test-jar</goal>
-            </goals>
-			<configuration>
-				<skip>${source.skip}</skip>
-			</configuration>            
-          </execution>
-        </executions>
-      </plugin>
-      
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-test-jar</id>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-			<configuration>
-				<skip>${testjar.skip}</skip>
-			</configuration>            
-            
-          </execution>
-        </executions>
-      </plugin>
-      
-    </plugins>
-  </build>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>${jacoco.version}</version>
+					<executions>
+						<execution>
+							<id>default-prepare-agent</id>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>default-report</id>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>default-check</id>
+							<goals>
+								<goal>check</goal>
+							</goals>
+							<configuration>
+								<rules>
+									<!-- implementation is needed only for Maven 2 -->
+									<rule implementation="org.jacoco.maven.RuleConfiguration">
+										<element>BUNDLE</element>
+										<limits>
+											<!-- implementation is needed only for Maven 2 -->
+											<limit implementation="org.jacoco.report.check.Limit">
+												<counter>COMPLEXITY</counter>
+												<value>COVEREDRATIO</value>
+												<minimum>0.60</minimum>
+											</limit>
+										</limits>
+									</rule>
+								</rules>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
 
-  <profiles>
-    <profile>
-      <id>sonatype-oss-release</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-enforcer-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>enforce-no-vertx-snapshots</id>
-                <goals>
-                  <goal>enforce</goal>
-                </goals>
-                <configuration>
-                  <rules>
-                    <requireReleaseDeps>
-                      <message>No Vert.x Snapshots Allowed during a release!</message>
-                      <includes>
-                        <include>de.braintags.io.vertx:*</include>
-                      </includes>
-                    </requireReleaseDeps>
-                  </rules>
-                  <fail>true</fail>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.compiler.plugin.version}</version>
+					<configuration>
+						<optimize>true</optimize>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${maven.source.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${maven.jar.plugin.version}</version>
+					<executions>
+						<execution>
+							<id>default-jar</id>
+							<configuration>
+								<archive>
+									<!-- Generate a jar INDEX.LIST -->
+									<index>true</index>
+									<!-- Add the Maven coordinates in the manifest -->
+									<manifestEntries>
+										<Maven-Group-Id>${project.groupId}</Maven-Group-Id>
+										<Maven-Artifact-Id>${project.artifactId}</Maven-Artifact-Id>
+										<Maven-Version>${project.version}</Maven-Version>
+									</manifestEntries>
+								</archive>
+								<!-- Remove examples and docoverride -->
+								<excludes>
+									<exclude>/docoverride/**</exclude>
+									<exclude>/examples/**</exclude>
+								</excludes>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven.surefire.plugin.version}</version>
+					<configuration>
+						<failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
+						<systemPropertyVariables>
+							<io.netty.leakDetectionLevel>PARANOID</io.netty.leakDetectionLevel>
+						</systemPropertyVariables>
+						<!-- Needs to be small enough to run in a EC2 1.7GB small instance -->
+						<argLine>-server -Xmx1200M</argLine>
+						<forkCount>1</forkCount>
+						<reuseForks>true</reuseForks>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-report-plugin</artifactId>
+					<version>${maven.surefire.report.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>${maven.site.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${maven.javadoc.plugin.version}</version>
+					<!-- Remove impl and keep only io/vertx files (no examples or docoverride) -->
+					<configuration>
+						<additionalparam>-Xdoclint:none</additionalparam>
+						<sourceFileExcludes>
+							<sourceFileExclude>**/package-info.java</sourceFileExclude>
+							<sourceFileExclude>**/impl/**</sourceFileExclude>
+						</sourceFileExcludes>
+						<sourceFileIncludes>
+							<sourceFileInclude>${javadocSourceFileInclude}</sourceFileInclude>
+						</sourceFileIncludes>
+					</configuration>
+				</plugin>
+
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${maven.resource.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>${maven.dependency.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>${maven.install.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>${maven.deploy.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>${maven.clean.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>${maven.enforcer.plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+							<goal>test-jar</goal>
+						</goals>
+						<configuration>
+							<skip>${source.skip}</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-test-jar</id>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+						<configuration>
+							<skip>${testjar.skip}</skip>
+						</configuration>
+
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>sonatype-oss-release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-enforcer-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>enforce-no-vertx-snapshots</id>
+								<goals>
+									<goal>enforce</goal>
+								</goals>
+								<configuration>
+									<rules>
+										<requireReleaseDeps>
+											<message>No Vert.x Snapshots Allowed during a release!</message>
+											<includes>
+												<include>de.braintags.io.vertx:*</include>
+											</includes>
+										</requireReleaseDeps>
+									</rules>
+									<fail>true</fail>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 
 	<!-- This section allows to define WHO are the developers behind these projects -->
