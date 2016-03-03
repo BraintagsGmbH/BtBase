@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Use this root-element to get auto-tag-completion (if your eclipse has 
-	support for this) -->
+<!-- Use this root-element to get auto-tag-completion (if your eclipse has support for this) -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -16,18 +15,14 @@
 	</parent>
 
 
-	<!-- The groupId defines the group for this project Core-Projects goes to 
-		"de.braintags" Features goes to "de.braintags.feature" Applications goes 
-		to "de.braintags.apps" -->
+	<!-- The groupId defines the group for this project Core-Projects goes to "de.braintags" Features goes to "de.braintags.feature" 
+		Applications goes to "de.braintags.apps" -->
 	<groupId>de.braintags</groupId>
-	<!-- The artifactId is the name of this project. It will be used for naming 
-		the jar too -->
+	<!-- The artifactId is the name of this project. It will be used for naming the jar too -->
 	<artifactId>btBasePOM</artifactId>
-	<!-- The version of this project Append "-SNAPSHOT" to version make it a 
-		snapshot -->
-	<!-- Packaging is the type of this project "pom" = This Project is only 
-		a configuring project with no real jar or else "jar" = This Project will 
-		be build a jar -->
+	<!-- The version of this project Append "-SNAPSHOT" to version make it a snapshot -->
+	<!-- Packaging is the type of this project "pom" = This Project is only a configuring project with no real jar or else "jar" 
+		= This Project will be build a jar -->
 	<packaging>pom</packaging>
 
 	<!-- Human readable name of this project -->
@@ -60,15 +55,14 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
-		
+
 	</dependencies>
 
 	<properties>
 		<testjar.skip>true</testjar.skip>
 		<doc.skip>true</doc.skip>
 		<maven.test.skip>true</maven.test.skip>
-		<!-- We skip sources jar generation as we do it with the assembly plugin 
-			to have greater control over the content -->
+		<!-- We skip sources jar generation as we do it with the assembly plugin to have greater control over the content -->
 		<source.skip>true</source.skip>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -208,21 +202,21 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<configuration>
-						<failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
-						<systemPropertyVariables>
-							<io.netty.leakDetectionLevel>PARANOID</io.netty.leakDetectionLevel>
-						</systemPropertyVariables>
-						<!-- Needs to be small enough to run in a EC2 1.7GB small instance -->
-						<argLine>${argLine} -server -Xmx1200M</argLine>
-						<forkCount>1</forkCount>
-						<reuseForks>true</reuseForks>
-					</configuration>
-				</plugin>
-		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
+					<systemPropertyVariables>
+						<io.netty.leakDetectionLevel>PARANOID</io.netty.leakDetectionLevel>
+					</systemPropertyVariables>
+					<!-- Needs to be small enough to run in a EC2 1.7GB small instance -->
+					<argLine>${argLine} -server -Xmx1200M</argLine>
+					<forkCount>1</forkCount>
+					<reuseForks>true</reuseForks>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -265,8 +259,8 @@
 					</execution>
 				</executions>
 			</plugin>
-		
-		
+
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
