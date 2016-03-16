@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Use this root-element to get auto-tag-completion (if your eclipse has support for this) -->
+<!-- Use this root-element to get auto-tag-completion (if your eclipse has 
+	support for this) -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<!-- The model version of this pom-file. Currently its always 4.0.0 -->
 	<modelVersion>4.0.0</modelVersion>
-	<version>11</version>
+	<version>12-SNAPSHOT</version>
 
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
@@ -15,14 +16,18 @@
 	</parent>
 
 
-	<!-- The groupId defines the group for this project Core-Projects goes to "de.braintags" Features goes to "de.braintags.feature" 
-		Applications goes to "de.braintags.apps" -->
+	<!-- The groupId defines the group for this project Core-Projects goes to 
+		"de.braintags" Features goes to "de.braintags.feature" Applications goes 
+		to "de.braintags.apps" -->
 	<groupId>de.braintags</groupId>
-	<!-- The artifactId is the name of this project. It will be used for naming the jar too -->
+	<!-- The artifactId is the name of this project. It will be used for naming 
+		the jar too -->
 	<artifactId>btBasePOM</artifactId>
-	<!-- The version of this project Append "-SNAPSHOT" to version make it a snapshot -->
-	<!-- Packaging is the type of this project "pom" = This Project is only a configuring project with no real jar or else "jar" 
-		= This Project will be build a jar -->
+	<!-- The version of this project Append "-SNAPSHOT" to version make it a 
+		snapshot -->
+	<!-- Packaging is the type of this project "pom" = This Project is only 
+		a configuring project with no real jar or else "jar" = This Project will 
+		be build a jar -->
 	<packaging>pom</packaging>
 
 	<!-- Human readable name of this project -->
@@ -62,7 +67,8 @@
 		<testjar.skip>true</testjar.skip>
 		<doc.skip>true</doc.skip>
 		<maven.test.skip>true</maven.test.skip>
-		<!-- We skip sources jar generation as we do it with the assembly plugin to have greater control over the content -->
+		<!-- We skip sources jar generation as we do it with the assembly plugin 
+			to have greater control over the content -->
 		<source.skip>true</source.skip>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -92,6 +98,16 @@
 		<maven.enforcer.plugin.version>1.3.1</maven.enforcer.plugin.version>
 	</properties>
 
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 
 	<build>
 		<pluginManagement>
@@ -202,6 +218,44 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<useReleaseProfile>false</useReleaseProfile>
+					<releaseProfiles>release</releaseProfiles>
+					<goals>deploy</goals>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.6</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>false</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
