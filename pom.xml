@@ -5,7 +5,7 @@
 
 	<!-- The model version of this pom-file. Currently its always 4.0.0 -->
 	<modelVersion>4.0.0</modelVersion>
-	<version>12</version>
+	<version>13-SNAPSHOT</version>
 
 <!-- 	<parent>
 		<groupId>org.sonatype.oss</groupId>
@@ -50,7 +50,7 @@
 		<connection>scm:git:git@github.com:BraintagsGmbH/BtBase.git</connection>
 		<developerConnection>scm:git:git@github.com:BraintagsGmbH/BtBase.git</developerConnection>
 		<url>git@github.com:BraintagsGmbH/BtBase.git</url>
-    <tag>btBasePOM-12</tag>
+    <tag>HEAD</tag>
   </scm>
 
 	<dependencies>
