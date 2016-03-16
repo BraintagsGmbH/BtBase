@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Use this root-element to get auto-tag-completion (if your eclipse has 
 	support for this) -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<!-- The model version of this pom-file. Currently its always 4.0.0 -->
 	<modelVersion>4.0.0</modelVersion>
-	<version>13-SNAPSHOT</version>
+	<version>12_SNAPSHOT</version>
 
 <!-- 	<parent>
 		<groupId>org.sonatype.oss</groupId>
@@ -50,7 +50,6 @@
 		<connection>scm:git:git@github.com:BraintagsGmbH/BtBase.git</connection>
 		<developerConnection>scm:git:git@github.com:BraintagsGmbH/BtBase.git</developerConnection>
 		<url>git@github.com:BraintagsGmbH/BtBase.git</url>
-    <tag>HEAD</tag>
   </scm>
 
 	<dependencies>
@@ -413,6 +412,4 @@
 		</developer>
 	</developers>
 
-	<url>https://github.com/BraintagsGmbH/BtBase</url>
-	<description>basic POM with default actions</description>
 </project>
