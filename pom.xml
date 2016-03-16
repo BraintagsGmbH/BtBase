@@ -5,14 +5,14 @@
 
 	<!-- The model version of this pom-file. Currently its always 4.0.0 -->
 	<modelVersion>4.0.0</modelVersion>
-	<version>12</version>
+	<version>12_SNAPSHOT</version>
 
-	<parent>
+<!-- 	<parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
 		<version>9</version>
 	</parent>
-
+ -->
 
 	<!-- The groupId defines the group for this project Core-Projects goes to 
 		"de.braintags" Features goes to "de.braintags.feature" Applications goes 
@@ -50,7 +50,6 @@
 		<connection>scm:git:git@github.com:BraintagsGmbH/BtBase.git</connection>
 		<developerConnection>scm:git:git@github.com:BraintagsGmbH/BtBase.git</developerConnection>
 		<url>git@github.com:BraintagsGmbH/BtBase.git</url>
-	  <tag>btBasePOM-12</tag>
   </scm>
 
 	<dependencies>
