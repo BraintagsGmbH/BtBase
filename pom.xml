@@ -413,4 +413,6 @@
 		</developer>
 	</developers>
 
+	<url>https://github.com/BraintagsGmbH/BtBase</url>
+	<description>basic POM with default actions</description>
 </project>
