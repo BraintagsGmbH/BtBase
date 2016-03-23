@@ -61,6 +61,9 @@
 		<!-- We skip sources jar generation as we do it with the assembly plugin 
 			to have greater control over the content -->
 		<source.skip>true</source.skip>
+		
+		<!--  signing can be switched off for SNAPSHOT -->
+		<sign.skip>false</sign.skip>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -72,6 +75,8 @@
 
 		<!-- Plugin versions -->
 		<jacoco.version>0.7.6.201602180812</jacoco.version>
+		<jacoco.minimum>0.60</jacoco.minimum>
+		<jacoco.haltOnFailure>true</jacoco.haltOnFailure>
 
 		<!-- We use 3.1 until this is resolved https://jira.codehaus.org/browse/MCOMPILER-236 -->
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
@@ -232,6 +237,9 @@
 						<goals>
 							<goal>sign</goal>
 						</goals>
+						<configuration>
+							<skip>${sign.skip}</skip>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
