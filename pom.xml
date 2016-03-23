@@ -72,6 +72,7 @@
 
 		<!-- Plugin versions -->
 		<jacoco.version>0.7.6.201602180812</jacoco.version>
+		<jacoco.minimum>0.60</jacoco.minimum>
 
 		<!-- We use 3.1 until this is resolved https://jira.codehaus.org/browse/MCOMPILER-236 -->
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
@@ -302,7 +303,7 @@
 										<limit implementation="org.jacoco.report.check.Limit">
 											<counter>COMPLEXITY</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.60</minimum>
+											<minimum>${jacoco.minimum}</minimum>
 										</limit>
 									</limits>
 								</rule>
