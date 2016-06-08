@@ -69,6 +69,8 @@
 		
 		<!--  Skipping sonar qube? -->
 		<sonar.skip>false</sonar.skip>
+		<sonar.language>java</sonar.language>
+		<sonar.host.url>http://sqube.bt-rz.net</sonar.host.url>
 				
 		<!--  signing can be switched off for SNAPSHOT -->
 		<sign.skip>false</sign.skip>
