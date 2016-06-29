@@ -5,7 +5,7 @@
 
 	<!-- The model version of this pom-file. Currently its always 4.0.0 -->
 	<modelVersion>4.0.0</modelVersion>
-	<version>16-SNAPSHOT</version>
+	<version>16</version>
 
 	<!-- The groupId defines the group for this project Core-Projects goes to 
 		"de.braintags" Features goes to "de.braintags.feature" Applications goes 
@@ -46,7 +46,6 @@
 		<connection>scm:git:git://github.com/BraintagsGmbH/BtBase.git</connection>
 		<developerConnection>scm:git:git@github.com:BraintagsGmbH/BtBase.git</developerConnection>
   </scm>
-  
 
 	<properties>
 		<testjar.skip>true</testjar.skip>
