@@ -16,6 +16,6 @@ node {
    // Mark the code build 'stage'....
    stage 'Build'
    // Run the maven build
-   sh "mvn clean deploy"
+   sh "mvn -Dsign.skip=true  clean deploy"
 
 }
