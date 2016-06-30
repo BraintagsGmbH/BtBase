@@ -15,7 +15,13 @@ node {
 
    // Mark the code build 'stage'....
    stage 'Build'
-   // Run the maven build
-   sh "mvn -Dsign.skip=true  clean deploy"
+
+    wrap([$class: 'ConfigFileBuildWrapper', managedFiles: [[fileId: 'MAVEN_SETTINGS_GLOBAL_OSSHR', 
+    	replaceTokens: false, targetLocation: 'settings.xml' ]]]) {
+        //sh "echo $MAVEN_SETTINGS"
+         sh "pwd"
+         sh "mvn -s settings.xml -Dsign.skip=true  clean deploy"
+    }
+
 
 }
