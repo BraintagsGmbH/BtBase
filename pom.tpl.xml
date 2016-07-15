@@ -82,7 +82,7 @@
 		<jacoco.haltOnFailure>true</jacoco.haltOnFailure>
 		<sonar.java.source>1.8</sonar.java.source>
 		<!-- We use 3.1 until this is resolved https://jira.codehaus.org/browse/MCOMPILER-236 -->
-		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
+		<maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
 		<maven.jar.plugin.version>2.5</maven.jar.plugin.version>
 		<maven.source.plugin.version>2.4</maven.source.plugin.version>
 		<maven.resource.plugin.version>2.7</maven.resource.plugin.version>
