@@ -59,6 +59,12 @@
 		<sonar.skip>true</sonar.skip>
 		<sonar.language>java</sonar.language>
 		<sonar.host.url>http://sqube.bt-rz.net</sonar.host.url>
+		<sonar.ws.timeout>60</sonar.ws.timeout>
+		<sonar.log.level>TRACE</sonar.log.level>
+		<sonar.verbose>true</sonar.verbose>
+		<sonar.showProfiling>true</sonar.showProfiling>
+		
+		
 		
 		<!--  signing can be switched off for SNAPSHOT -->
 		<sign.skip>false</sign.skip>
@@ -74,7 +80,6 @@
 		<!-- dependency versions -->
 		<log4j.version>1.2.17</log4j.version>
 		
-
 		<!-- Plugin versions -->
 		<sonar-jacoco-listeners>3.8</sonar-jacoco-listeners>
 		<jacoco.version>0.7.7.201606060606</jacoco.version>
@@ -451,18 +456,6 @@
 				<role>Master Java Developer</role>
 				<role>Owner</role>
 				<role>Founder</role>
-			</roles>
-		</developer>
-		<developer>
-			<id>mrau</id>
-			<name>Martin Rau</name>
-			<email>martin.rau@braintags.de</email>
-			<organization>Braintags GmbH</organization>
-			<organizationUrl>http://www.braintags.de</organizationUrl>
-			<roles>
-				<role>Java Developer</role>
-				<role>Master of Desaster</role>
-				<role>Cookie Master</role>
 			</roles>
 		</developer>
 	</developers>

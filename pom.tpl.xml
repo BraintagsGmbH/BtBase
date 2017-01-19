@@ -453,18 +453,6 @@
 				<role>Founder</role>
 			</roles>
 		</developer>
-		<developer>
-			<id>mrau</id>
-			<name>Martin Rau</name>
-			<email>martin.rau@braintags.de</email>
-			<organization>Braintags GmbH</organization>
-			<organizationUrl>http://www.braintags.de</organizationUrl>
-			<roles>
-				<role>Java Developer</role>
-				<role>Master of Desaster</role>
-				<role>Cookie Master</role>
-			</roles>
-		</developer>
 	</developers>
 
 	
